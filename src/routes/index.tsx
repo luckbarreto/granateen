@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/hero-financas.jpg";
+import ebookCover from "@/assets/ebook-cover.jpg.asset.json";
 import { brl, useFinance } from "@/lib/finance";
 import { Button } from "@/components/ui/button";
 import { TransactionForm } from "@/components/finance/TransactionForm";
