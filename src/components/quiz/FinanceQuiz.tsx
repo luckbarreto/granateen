@@ -16,6 +16,8 @@ export function FinanceQuiz() {
   const questao = QUIZ_QUESTIONS[indice];
   const progresso = (indice / QUIZ_QUESTIONS.length) * 100;
 
+  if (!questao) return null;
+
   const responder = (letra: QuizOption["letra"]) => {
     const proximas = [...respostas, letra];
     setRespostas(proximas);
