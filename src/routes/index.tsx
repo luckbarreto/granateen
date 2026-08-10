@@ -198,7 +198,7 @@ function Index() {
         <div className="grid items-center gap-8 rounded-3xl border border-border bg-card p-6 md:grid-cols-[minmax(0,260px)_1fr] md:p-10">
           <img
             src={ebookCover.url}
-            alt="Capa do ebook Dinheiro no Controle"
+            alt="Capa do ebook Educação Financeira, por Luckas Barreto"
             width={600}
             height={800}
             loading="lazy"
@@ -208,7 +208,7 @@ function Index() {
             <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
               Ebook
             </p>
-            <h2 className="mt-3 text-2xl font-bold md:text-3xl">Dinheiro no Controle</h2>
+            <h2 className="mt-3 text-2xl font-bold md:text-3xl">Educação Financeira</h2>
             <p className="mt-3 max-w-lg text-muted-foreground">
               O guia completo para você dominar sua grana de vez: organizar a mesada, cortar gastos
               invisíveis e transformar suas metas em realidade.
