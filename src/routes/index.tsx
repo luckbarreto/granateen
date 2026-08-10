@@ -208,7 +208,7 @@ function Index() {
             <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
               Ebook
             </p>
-            <h2 className="mt-3 text-2xl font-bold md:text-3xl">Dinheiro no Controle</h2>
+            <h2 className="mt-3 text-2xl font-bold md:text-3xl">Educação Financeira</h2>
             <p className="mt-3 max-w-lg text-muted-foreground">
               O guia completo para você dominar sua grana de vez: organizar a mesada, cortar gastos
               invisíveis e transformar suas metas em realidade.
