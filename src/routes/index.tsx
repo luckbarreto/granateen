@@ -198,7 +198,7 @@ function Index() {
         <div className="grid items-center gap-8 rounded-3xl border border-border bg-card p-6 md:grid-cols-[minmax(0,260px)_1fr] md:p-10">
           <img
             src={ebookCover.url}
-            alt="Capa do ebook Dinheiro no Controle"
+            alt="Capa do ebook Educação Financeira, por Luckas Barreto"
             width={600}
             height={800}
             loading="lazy"
