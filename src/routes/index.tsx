@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/hero-financas.jpg";
+import ebookCover from "@/assets/ebook-cover.jpg.asset.json";
 import { brl, useFinance } from "@/lib/finance";
 import { Button } from "@/components/ui/button";
 import { TransactionForm } from "@/components/finance/TransactionForm";
@@ -153,7 +154,39 @@ function Index() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-5 pb-20">
+        <div className="grid items-center gap-8 rounded-3xl border border-border bg-card p-6 md:grid-cols-[minmax(0,260px)_1fr] md:p-10">
+          <img
+            src={ebookCover.url}
+            alt="Capa do ebook Dinheiro no Controle"
+            width={600}
+            height={800}
+            loading="lazy"
+            className="w-full rounded-2xl border border-border"
+          />
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+              Ebook
+            </p>
+            <h2 className="mt-3 text-2xl font-bold md:text-3xl">Dinheiro no Controle</h2>
+            <p className="mt-3 max-w-lg text-muted-foreground">
+              O guia completo para você dominar sua grana de vez: organizar a mesada, cortar gastos
+              invisíveis e transformar suas metas em realidade.
+            </p>
+            <a
+              href="https://pay.kiwify.com.br/G2lk0oU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-block"
+            >
+              <Button size="lg">Quero o ebook</Button>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-border">
+
         <div className="mx-auto max-w-6xl px-5 py-8 text-sm text-muted-foreground">
           Grana Teen — seus dados ficam salvos apenas neste aparelho.
         </div>
