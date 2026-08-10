@@ -7,42 +7,52 @@ import { TransactionForm } from "@/components/finance/TransactionForm";
 import { TransactionList } from "@/components/finance/TransactionList";
 import { SpendingBreakdown } from "@/components/finance/SpendingBreakdown";
 import { Goals } from "@/components/finance/Goals";
-
-const KIWIFY = "https://pay.kiwify.com.br/G2lk0oU";
+import { FinanceQuiz } from "@/components/quiz/FinanceQuiz";
+import { PLUS_TOOLS, PRODUCTS } from "@/lib/products";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Grana Teen — controle financeiro para adolescentes" },
+      { title: "Grana Teen — quiz de perfil financeiro e controle de gastos" },
       {
         name: "description",
         content:
-          "Anote mesada e gastos, veja para onde vai seu dinheiro e junte grana para suas metas. Ferramenta gratuita, feito para adolescentes.",
+          "Descubra seu perfil financeiro em 6 perguntas, use a ferramenta gratuita para registrar mesada e gastos e escolha como continuar aprendendo.",
       },
-      { property: "og:title", content: "Grana Teen — seu dinheiro sob controle" },
+      { property: "og:type", content: "website" },
+      { property: "og:title", content: "Grana Teen — descubra seu perfil financeiro" },
       {
         property: "og:description",
-        content: "Mesada, gastos e metas de economia em um só lugar, feito para adolescentes.",
+        content: "Quiz rápido, ferramenta gratuita de controle de gastos e materiais para ir além.",
       },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
 });
 
-const RECURSOS_FREE = [
-  { icone: "📥", titulo: "Registrar entradas", texto: "Anote mesada, bicos e presentinhos." },
-  { icone: "📤", titulo: "Registrar gastos", texto: "Veja cada real que sai na hora." },
-  { icone: "📊", titulo: "Acompanhar o saldo", texto: "Saiba sempre quanto sobrou." },
-  { icone: "🎯", titulo: "Criar metas", texto: "Junte grana para o que você quer." },
-  { icone: "🧭", titulo: "Entender para onde vai", texto: "Gastos separados por categoria." },
+const NAV = [
+  { href: "#topo", label: "Início" },
+  { href: "#quiz", label: "Quiz" },
+  { href: "#ferramenta", label: "Ferramenta" },
+  { href: "#plus", label: "Plus" },
+  { href: "#ebook", label: "E-book" },
+];
+
+const PLUS_BENEFICIOS = [
+  "Ferramentas extras de organização financeira",
+  "Metas financeiras",
+  "Desafios de economia",
+  "Planejadores",
+  "Recursos extras para acompanhar sua evolução",
 ];
 
 const GUIA_BENEFICIOS = [
-  "Estratégias simples para controlar gastos",
+  "Estratégias para controlar gastos",
   "Como evitar compras por impulso",
   "Como começar a guardar dinheiro",
-  "Como definir metas financeiras",
-  "Pequenos desafios para colocar o aprendizado em prática",
+  "Como criar metas financeiras",
+  "Desafios práticos para colocar em ação",
 ];
 
 const DICAS = [
@@ -60,6 +70,56 @@ const DICAS = [
   },
 ];
 
+function CheckList({ itens, tom = "success" }: { itens: string[]; tom?: "success" | "primary" }) {
+  return (
+    <ul className="grid gap-2.5">
+      {itens.map((i) => (
+        <li key={i} className="flex items-start gap-2.5 text-sm">
+          <span
+            className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full ${
+              tom === "success" ? "bg-success/15 text-success" : "bg-primary/15 text-primary"
+            }`}
+          >
+            ✓
+          </span>
+          <span className="text-muted-foreground">{i}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Botão de produto: usa o checkout quando existir, senão fica preparado para receber o link. */
+function ProductButton({
+  produto,
+  children,
+  variant = "default",
+}: {
+  produto: (typeof PRODUCTS)[keyof typeof PRODUCTS];
+  children: React.ReactNode;
+  variant?: "default" | "secondary";
+}) {
+  if (!produto.checkoutUrl) {
+    return (
+      <Button size="lg" variant={variant} className="h-12 w-full text-base sm:w-auto" disabled>
+        {children}
+      </Button>
+    );
+  }
+  return (
+    <a
+      href={produto.checkoutUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block w-full sm:w-auto"
+    >
+      <Button size="lg" variant={variant} className="h-12 w-full text-base sm:w-auto">
+        {children}
+      </Button>
+    </a>
+  );
+}
+
 function Index() {
   const {
     transacoes,
@@ -76,35 +136,55 @@ function Index() {
   } = useFinance();
 
   return (
-    <main className="min-h-screen">
-      {/* 1. Apresentação principal */}
-      <header className="surface-glow border-b border-border">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-6">
-          <span className="font-display text-lg font-extrabold tracking-tight">Grana Teen</span>
-          <a href="#registrar">
-            <Button size="sm">Começar grátis</Button>
-          </a>
+    <main className="min-h-screen scroll-smooth">
+      {/* Navegação */}
+      <div id="topo" className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur">
+        <nav className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
+          <span className="font-display shrink-0 text-base font-extrabold tracking-tight">
+            Grana Teen
+          </span>
+          <div className="-mx-1 flex min-w-0 flex-1 gap-1 overflow-x-auto px-1 text-sm">
+            {NAV.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="shrink-0 rounded-full px-3 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                {n.label}
+              </a>
+            ))}
+          </div>
         </nav>
+      </div>
 
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 pb-16 pt-6 md:grid-cols-2 md:pb-24">
+      {/* 1. Hero */}
+      <header className="surface-glow border-b border-border">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 pb-14 pt-10 md:grid-cols-2 md:pb-20">
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-              Seu dinheiro. Suas metas. Seu controle. 💰
+              Seu dinheiro. Suas metas. Seu controle.
             </p>
-            <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] md:text-6xl">
-              Controle a <span className="text-brand">sua grana</span> sem depender de ninguém
+            <h1 className="mt-4 text-3xl font-extrabold leading-[1.08] sm:text-4xl md:text-5xl">
+              💰 Descubra como anda sua relação com o dinheiro
             </h1>
             <p className="mt-5 max-w-md text-base text-muted-foreground md:text-lg">
-              Uma ferramenta simples para você entender seus gastos, organizar seu dinheiro e começar
-              a construir suas metas financeiras.
+              Faça um quiz rápido, descubra seu perfil financeiro e veja por onde começar a organizar
+              melhor sua grana.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a href="#registrar">
-                <Button size="lg">Começar gratuitamente</Button>
+            <div className="mt-8">
+              <a href="#quiz" className="block sm:inline-block">
+                <Button size="lg" className="h-13 w-full text-base sm:w-auto">
+                  DESCOBRIR MEU PERFIL →
+                </Button>
               </a>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-success/30 bg-success/10 px-3 py-1.5 text-sm font-semibold text-success">
-                🆓 100% gratuito
-              </span>
+              <p className="mt-5 text-sm text-muted-foreground">
+                Ou comece diretamente pela ferramenta gratuita.
+              </p>
+              <a href="#ferramenta" className="mt-2 block sm:inline-block">
+                <Button size="lg" variant="secondary" className="h-12 w-full text-base sm:w-auto">
+                  Começar gratuitamente
+                </Button>
+              </a>
             </div>
           </div>
 
@@ -118,39 +198,33 @@ function Index() {
         </div>
       </header>
 
-      {/* 2. Destaque da ferramenta gratuita */}
-      <section className="mx-auto max-w-6xl px-5 py-14">
+      {/* 2. Quiz */}
+      <section id="quiz" className="mx-auto max-w-3xl scroll-mt-20 px-5 py-14">
+        <div className="mb-6 text-center">
+          <h2 className="text-2xl font-bold md:text-3xl">Quiz de perfil financeiro</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            6 perguntas rápidas. Sem cadastro, sem e-mail, sem dado nenhum.
+          </p>
+        </div>
+        <FinanceQuiz />
+      </section>
+
+      {/* 3. Ferramenta gratuita */}
+      <section id="ferramenta" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-10">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold md:text-3xl">Organize sua grana de verdade</h2>
+            <h2 className="text-2xl font-bold md:text-3xl">🆓 Ferramenta gratuita</h2>
             <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-              Tudo isso já está liberado pra você usar — sem cadastro, sem pagar nada.
+              Registre entradas e gastos, veja seu saldo e entenda para onde seu dinheiro está indo.
+              Sem cadastro.
             </p>
           </div>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-success/30 bg-success/10 px-3 py-1.5 text-sm font-semibold text-success">
-            🆓 100% gratuito
+            100% gratuito
           </span>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {RECURSOS_FREE.map((r) => (
-            <article
-              key={r.titulo}
-              className="rounded-3xl border border-border bg-card p-5"
-            >
-              <div className="flex size-11 items-center justify-center rounded-2xl bg-muted text-xl">
-                {r.icone}
-              </div>
-              <h3 className="mt-4 text-base font-semibold">{r.titulo}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{r.texto}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* Ferramenta — saldo + registro + gastos */}
-      <section className="mx-auto max-w-6xl px-5 pb-14">
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
           <div className="rounded-3xl border border-border bg-card p-6">
             <p className="text-sm text-muted-foreground">Saldo atual</p>
             <p className="mt-2 text-3xl font-extrabold">{brl(saldo)}</p>
@@ -164,12 +238,10 @@ function Index() {
             <p className="mt-2 text-3xl font-extrabold text-destructive">{brl(saidas)}</p>
           </div>
         </div>
-      </section>
 
-      <section id="registrar" className="mx-auto max-w-6xl px-5 pb-14">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,380px)_1fr]">
+        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,380px)_1fr]">
           <div className="rounded-3xl border border-border bg-card p-6">
-            <h2 className="text-xl font-bold">Registrar movimento</h2>
+            <h3 className="text-xl font-bold">Registrar movimento</h3>
             <p className="mb-5 mt-1 text-sm text-muted-foreground">
               Leva 10 segundos e muda tudo no fim do mês.
             </p>
@@ -178,23 +250,27 @@ function Index() {
 
           <div className="space-y-6">
             <div className="rounded-3xl border border-border bg-card p-6">
-              <h2 className="mb-5 text-xl font-bold">Para onde vai seu dinheiro</h2>
+              <h3 className="mb-5 text-xl font-bold">Para onde vai seu dinheiro</h3>
               <SpendingBreakdown dados={porCategoria} total={saidas} />
             </div>
             <div>
-              <h2 className="mb-3 text-xl font-bold">Últimos movimentos</h2>
+              <h3 className="mb-3 text-xl font-bold">Últimos movimentos</h3>
               <TransactionList transacoes={transacoes} onRemove={removeTransacao} />
             </div>
           </div>
         </div>
+
+        <div className="mt-8">
+          <h3 className="mb-1 text-xl font-bold">Suas metas</h3>
+          <p className="mb-5 text-sm text-muted-foreground">
+            Versão básica das metas, liberada para todo mundo.
+          </p>
+          <Goals metas={metas} onAdd={addMeta} onGuardar={guardar} onRemove={removeMeta} />
+        </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-14">
-        <h2 className="mb-5 text-2xl font-bold">Suas metas</h2>
-        <Goals metas={metas} onAdd={addMeta} onGuardar={guardar} onRemove={removeMeta} />
-      </section>
-
-      <section className="mx-auto max-w-6xl px-5 pb-20">
+      {/* Dicas */}
+      <section className="mx-auto max-w-6xl px-5 py-10">
         <h2 className="mb-5 text-2xl font-bold">Aprenda na prática</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           {DICAS.map((d) => (
@@ -206,137 +282,167 @@ function Index() {
         </div>
       </section>
 
-      {/* 3. Nova seção para o e-book */}
-      <section className="border-t border-border bg-muted/30">
-        <div className="mx-auto max-w-6xl px-5 py-16 text-center">
+      {/* 4. Grana Teen Plus */}
+      <section id="plus" className="border-y border-border bg-muted/30">
+        <div className="mx-auto max-w-6xl scroll-mt-20 px-5 py-14">
           <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-            Material complementar
+            🧰 Quer mais ferramentas?
           </p>
-          <h2 className="mx-auto mt-3 max-w-2xl text-2xl font-bold md:text-3xl">
-            Quer ir além? 📚
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-muted-foreground md:text-base">
-            O Grana Teen também tem um guia prático para quem quer aprender a controlar melhor os
-            gastos, evitar compras por impulso e começar a guardar dinheiro mesmo ganhando pouco.
+          <h2 className="mt-3 text-2xl font-bold md:text-3xl">Grana Teen Plus</h2>
+          <p className="mt-2 max-w-xl text-sm text-muted-foreground md:text-base">
+            Mais ferramentas para organizar sua grana de forma prática.
           </p>
-          <p className="mx-auto mt-3 max-w-xl text-sm font-medium text-foreground">
-            A ferramenta ajuda você a colocar em prática. O guia ajuda você a entender como fazer.
-          </p>
+
+          <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,360px)]">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {PLUS_TOOLS.map((t) => (
+                <article
+                  key={t.titulo}
+                  className="relative rounded-3xl border border-border bg-card p-5"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-muted text-lg">
+                      🔒
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className="text-base font-semibold">{t.titulo}</h3>
+                      <p className="mt-1 text-sm text-muted-foreground">{t.texto}</p>
+                    </div>
+                  </div>
+                  <p className="mt-4 inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                    Disponível no Grana Teen Plus
+                  </p>
+                </article>
+              ))}
+            </div>
+
+            <div className="h-fit rounded-4xl border border-primary/30 bg-card p-6">
+              <p className="text-3xl font-extrabold">{PRODUCTS.plus.preco}</p>
+              <p className="mt-1 text-sm text-muted-foreground">Acesso ao Grana Teen Plus</p>
+              <div className="mt-5">
+                <CheckList itens={PLUS_BENEFICIOS} tom="primary" />
+              </div>
+              <div className="mt-6">
+                <ProductButton produto={PRODUCTS.plus}>QUERO O GRANA TEEN PLUS →</ProductButton>
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">
+                A ferramenta básica continua gratuita para todo mundo.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* 4. Apresentação do e-book */}
-      <section className="mx-auto max-w-6xl px-5 py-14">
-        <div className="grid items-center gap-8 rounded-4xl border border-border bg-card p-6 md:grid-cols-[minmax(0,260px)_1fr] md:p-10">
+      {/* 5. E-book */}
+      <section id="ebook" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-14">
+        <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+          📚 Prefere aprender antes de colocar em prática?
+        </p>
+        <h2 className="mt-3 text-2xl font-bold md:text-3xl">Conheça o Guia Grana Teen.</h2>
+
+        <div className="mt-8 grid items-center gap-8 rounded-4xl border border-border bg-card p-6 md:grid-cols-[minmax(0,240px)_1fr] md:p-10">
           <img
             src={ebookCover.url}
-            alt="Capa do ebook Educação Financeira, por Luckas Barreto"
+            alt="Capa do guia Educação Financeira, por Luckas Barreto"
             width={600}
             height={800}
             loading="lazy"
             className="w-full rounded-2xl border border-border"
           />
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-              📚 Guia Grana Teen
-            </span>
-            <h2 className="mt-3 text-2xl font-bold md:text-3xl">
-              Aprenda a cuidar melhor do seu dinheiro, mesmo começando com pouco.
-            </h2>
-            <ul className="mt-5 grid gap-2.5">
-              {GUIA_BENEFICIOS.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-success/15 text-success">
-                    ✓
-                  </span>
-                  <span className="text-muted-foreground">{item}</span>
-                </li>
-              ))}
-            </ul>
+            <p className="text-sm text-muted-foreground md:text-base">
+              Um guia prático para aprender a controlar gastos, evitar compras por impulso, começar a
+              guardar dinheiro e criar metas financeiras.
+            </p>
+            <div className="mt-5">
+              <CheckList itens={GUIA_BENEFICIOS} />
+            </div>
             <div className="mt-6 flex flex-wrap items-center gap-4">
-              <span className="text-2xl font-extrabold">R$ 19,90</span>
-              <a href={KIWIFY} target="_blank" rel="noopener noreferrer" className="inline-block">
-                <Button size="lg">Conhecer o e-book</Button>
-              </a>
+              <span className="text-2xl font-extrabold">{PRODUCTS.guia.preco}</span>
+              <ProductButton produto={PRODUCTS.guia}>CONHECER O E-BOOK →</ProductButton>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Comparação visual */}
+      {/* 6. Comparação */}
       <section className="mx-auto max-w-6xl px-5 pb-14">
+        <h2 className="mb-6 text-2xl font-bold md:text-3xl">Qual caminho combina mais com você?</h2>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-3xl border border-success/30 bg-success/5 p-6">
+          <div className="flex flex-col rounded-3xl border border-primary/30 bg-card p-6">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">🆓</span>
-              <div>
-                <h3 className="text-lg font-bold">Ferramenta Grana Teen</h3>
-                <p className="text-sm text-muted-foreground">Para colocar em prática</p>
+              <span className="text-2xl">🧰</span>
+              <div className="min-w-0">
+                <h3 className="text-lg font-bold">Grana Teen Plus</h3>
+                <p className="text-sm text-muted-foreground">
+                  Para quem prefere ferramentas práticas.
+                </p>
               </div>
             </div>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {[
-                "Controle de gastos",
-                "Organização do dinheiro",
-                "Metas",
-                "Acompanhamento do saldo",
-              ].map((i) => (
-                <li key={i} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-success/15 text-success">
-                    ✓
-                  </span>
-                  <span className="text-muted-foreground">{i}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 inline-flex rounded-full bg-success/15 px-3 py-1.5 text-sm font-semibold text-success">
-              Gratuito
-            </p>
+            <p className="mt-4 text-2xl font-extrabold">{PRODUCTS.plus.preco}</p>
+            <div className="mt-5 flex-1">
+              <CheckList
+                itens={["Mais ferramentas", "Metas", "Desafios", "Planejamento", "Organização prática"]}
+                tom="primary"
+              />
+            </div>
+            <div className="mt-6">
+              <ProductButton produto={PRODUCTS.plus}>QUERO AS FERRAMENTAS →</ProductButton>
+            </div>
           </div>
 
-          <div className="rounded-3xl border border-border bg-card p-6">
+          <div className="flex flex-col rounded-3xl border border-border bg-card p-6">
             <div className="flex items-center gap-3">
               <span className="text-2xl">📚</span>
-              <div>
+              <div className="min-w-0">
                 <h3 className="text-lg font-bold">Guia Grana Teen</h3>
-                <p className="text-sm text-muted-foreground">Para aprender estratégias</p>
+                <p className="text-sm text-muted-foreground">
+                  Para quem prefere aprender estratégias.
+                </p>
               </div>
             </div>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {[
-                "Conteúdo educativo",
-                "Estratégias práticas",
-                "Desafios",
-                "Organização financeira",
-              ].map((i) => (
-                <li key={i} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary/15 text-primary">
-                    ✓
-                  </span>
-                  <span className="text-muted-foreground">{i}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 inline-flex rounded-full bg-muted px-3 py-1.5 text-sm font-semibold">
-              R$ 19,90
-            </p>
+            <p className="mt-4 text-2xl font-extrabold">{PRODUCTS.guia.preco}</p>
+            <div className="mt-5 flex-1">
+              <CheckList
+                itens={[
+                  "Conteúdo educativo",
+                  "Estratégias práticas",
+                  "Controle de gastos",
+                  "Compras por impulso",
+                  "Metas e desafios",
+                ]}
+              />
+            </div>
+            <div className="mt-6">
+              <ProductButton produto={PRODUCTS.guia} variant="secondary">
+                QUERO O GUIA →
+              </ProductButton>
+            </div>
           </div>
         </div>
+        <p className="mt-5 text-center text-sm text-muted-foreground">
+          Você também pode começar gratuitamente pela ferramenta básica.
+        </p>
       </section>
 
-      {/* 6. CTA final */}
+      {/* 7. CTA final */}
       <section className="border-t border-border">
-        <div className="mx-auto max-w-3xl px-5 py-20 text-center">
-          <h2 className="text-2xl font-bold md:text-3xl">Comece a cuidar melhor da sua grana hoje. 💚</h2>
+        <div className="mx-auto max-w-3xl px-5 py-16 text-center">
+          <h2 className="text-2xl font-bold md:text-3xl">Comece do seu jeito. 💚</h2>
           <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground md:text-base">
-            Use a ferramenta gratuitamente e, se quiser se aprofundar, conheça o Guia Grana Teen.
+            Descubra seu perfil, use a ferramenta gratuita e escolha se quer continuar com mais
+            ferramentas ou aprender através do nosso guia.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a href="#registrar">
-              <Button size="lg">Começar gratuitamente</Button>
+          <div className="mt-8 grid gap-3 sm:flex sm:justify-center">
+            <a href="#quiz">
+              <Button size="lg" className="h-12 w-full text-base sm:w-auto">
+                FAZER O QUIZ →
+              </Button>
             </a>
-            <a href={KIWIFY} target="_blank" rel="noopener noreferrer" className="inline-block">
-              <Button size="lg" variant="secondary">Conhecer o e-book</Button>
+            <a href="#ferramenta">
+              <Button size="lg" variant="secondary" className="h-12 w-full text-base sm:w-auto">
+                COMEÇAR GRATUITAMENTE →
+              </Button>
             </a>
           </div>
         </div>
