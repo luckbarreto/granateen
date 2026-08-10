@@ -20,7 +20,7 @@ export const PRODUCTS: Record<Product["id"], Product> = {
     nome: "Grana Teen Plus",
     preco: "R$ 8,50",
     // TODO: preencher com o link de checkout da Kiwify quando disponível.
-    checkoutUrl:     https://pay.kiwify.com.br/1M5hyRO,
+    checkoutUrl:     "https://pay.kiwify.com.br/1M5hyRO",
   },
   guia: {
     id: "guia",
