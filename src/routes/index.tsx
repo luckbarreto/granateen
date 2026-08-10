@@ -114,6 +114,46 @@ function Index() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-5 pb-14">
+        <div className="grid items-center gap-6 rounded-3xl border border-border bg-card p-6 md:grid-cols-[1.4fr_1fr] md:p-8">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+              Material complementar
+            </span>
+            <h2 className="mt-4 text-2xl font-bold leading-tight md:text-3xl">
+              Quer ir além do controle dos gastos? <span className="text-brand">💰</span>
+            </h2>
+            <p className="mt-3 max-w-xl text-sm text-muted-foreground md:text-base">
+              Aprenda estratégias simples para organizar sua grana, controlar gastos por impulso e
+              começar a criar o hábito de economizar.
+            </p>
+            <a
+              href="https://pay.kiwify.com.br/G2lk0oU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-block"
+            >
+              <Button size="lg">Conhecer o e-book 📚</Button>
+            </a>
+          </div>
+          <ul className="grid gap-2.5 self-center">
+            {[
+              "Dicas práticas para organizar seus gastos",
+              "Estratégias para evitar compras por impulso",
+              "Pequenos desafios para ajudar você a economizar",
+              "Conteúdo simples para quem está começando",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2.5 text-sm">
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-success/15 text-success">
+                  ✓
+                </span>
+                <span className="text-muted-foreground">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <section id="registrar" className="mx-auto max-w-6xl px-5 pb-14">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,380px)_1fr]">
           <div className="rounded-3xl border border-border bg-card p-6">
