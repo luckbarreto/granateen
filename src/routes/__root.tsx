@@ -84,6 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { property: "og:title", content: "Grana Teen — seu dinheiro evoluindo" },
+      { property: "og:image", content: "https://granateen-vp2m.vercel.app/IMG_7786.jpeg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
