@@ -1,4 +1,4 @@
-oi/**
+/**
  * Configuração central dos produtos pagos.
  *
  * Preparado para a futura integração de checkout (Kiwify).
