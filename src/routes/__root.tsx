@@ -77,12 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Grana Teen — controle financeiro para adolescentes" },
+      { title: "Grana Teen — Seu dinheiro evoluindo" },
       {
         name: "description",
         content: "Organize mesada, gastos e metas de economia em um app simples feito para adolescentes.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:title", content: "Grana Teen — seu dinheiro evoluindo" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
