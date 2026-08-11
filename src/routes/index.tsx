@@ -342,7 +342,7 @@ function Index() {
 
         <div className="mt-8 grid items-center gap-8 rounded-4xl border border-border bg-card p-6 md:grid-cols-[minmax(0,240px)_1fr] md:p-10">
           <img
-            src={ebookCover.url}
+            src={ebookCover}
             alt="Capa do guia Educação Financeira, por Luckas Barreto"
             width={600}
             height={800}
