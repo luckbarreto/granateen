@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
           "Descubra seu perfil financeiro em 6 perguntas, use a ferramenta gratuita para registrar mesada e gastos e escolha como continuar aprendendo.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "Grana Teen — descubra seu perfil financeiro" },
+      { property: "og:title", content: "Grana Teen — Seu dinheiro evoluindo" },
       {
         property: "og:description",
         content: "Quiz rápido, ferramenta gratuita de controle de gastos e materiais para ir além.",
