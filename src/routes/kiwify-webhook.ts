@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/api/kiwify-webhook")({
+export const Route = createFileRoute("/kiwify-webhook")({
   server: {
     handlers: {
       POST: async ({ request }) => {
