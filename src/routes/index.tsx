@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/hero-financas.jpg";
 import ebookCover from "@/assets/ebook-cover.jpg";
@@ -121,6 +122,42 @@ function ProductButton({
 }
 
 function Index() {
+  function Index() {
+  const [emailPlus, setEmailPlus] = useState("");
+  const [plusAtivo, setPlusAtivo] = useState(false);
+  const [verificandoPlus, setVerificandoPlus] = useState(false);
+  const [mensagemPlus, setMensagemPlus] = useState("");
+
+  const verificarPlus = async () => {
+    setVerificandoPlus(true);
+    setMensagemPlus("");
+
+    try {
+      const response = await fetch("/verificar-plus", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: emailPlus }),
+      });
+
+      const data = await response.json();
+
+      if (data.active) {
+        setPlusAtivo(true);
+        setMensagemPlus("Acesso Plus confirmado! 🎉");
+      } else {
+        setPlusAtivo(false);
+        setMensagemPlus("Não encontramos um acesso Plus para esse e-mail.");
+      }
+    } catch {
+      setMensagemPlus("Não foi possível verificar agora. Tente novamente.");
+    } finally {
+      setVerificandoPlus(false);
+    }
+  };
+
+  const {
   const {
     transacoes,
     metas,
