@@ -331,27 +331,63 @@ function Index() {
           </p>
 
           <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,360px)]">
-            <div className="grid gap-4 sm:grid-cols-2">
-              {PLUS_TOOLS.map((t) => (
-                <article
-                  key={t.titulo}
-                  className="relative rounded-3xl border border-border bg-card p-5"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-muted text-lg">
-                      🔒
-                    </span>
-                    <div className="min-w-0">
-                      <h3 className="text-base font-semibold">{t.titulo}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{t.texto}</p>
-                    </div>
-                  </div>
-                  <p className="mt-4 inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                    Disponível no Grana Teen Plus
-                  </p>
-                </article>
-              ))}
-            </div>
+  <div className="grid gap-4 sm:grid-cols-2">
+    <article className="rounded-3xl border border-border bg-card p-5">
+      <div className="flex items-start gap-3">
+        <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-muted text-lg">
+          📊
+        </span>
+        <div className="min-w-0">
+          <h3 className="text-base font-semibold">Controle de gastos</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Organize seus gastos e veja para onde seu dinheiro está indo.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article className="rounded-3xl border border-border bg-card p-5">
+      <div className="flex items-start gap-3">
+        <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-muted text-lg">
+          🎯
+        </span>
+        <div className="min-w-0">
+          <h3 className="text-base font-semibold">Metas financeiras</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Defina objetivos e acompanhe seu progresso para alcançá-los.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article className="rounded-3xl border border-border bg-card p-5">
+      <div className="flex items-start gap-3">
+        <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-muted text-lg">
+          💰
+        </span>
+        <div className="min-w-0">
+          <h3 className="text-base font-semibold">Desafios para economizar</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Transforme o hábito de economizar em pequenos desafios práticos.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article className="rounded-3xl border border-border bg-card p-5">
+      <div className="flex items-start gap-3">
+        <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-muted text-lg">
+          🧠
+        </span>
+        <div className="min-w-0">
+          <h3 className="text-base font-semibold">Dicas personalizadas</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Encontre estratégias simples para cuidar melhor do seu dinheiro.
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
 
             <div className="h-fit rounded-4xl border border-primary/30 bg-card p-6">
               <p className="text-3xl font-extrabold">{PRODUCTS.plus.preco}</p>
