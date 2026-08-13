@@ -435,42 +435,6 @@ function Index() {
     </p>
   )}
 </div>
-  <p className="text-sm font-semibold">Já comprou o Grana Teen Plus?</p>
-  <p className="mt-1 text-xs text-muted-foreground">
-    Digite o e-mail usado na compra para liberar seu acesso.
-  </p>
-
-  <div className="mt-4 flex flex-col gap-3">
-    <input
-      type="email"
-      value={emailPlus}
-      onChange={(e) => setEmailPlus(e.target.value)}
-      placeholder="seuemail@exemplo.com"
-      className="h-11 w-full rounded-xl border border-border bg-background px-3 text-sm outline-none transition focus:border-primary"
-    />
-
-    <Button
-      type="button"
-      onClick={verificarPlus}
-      disabled={verificandoPlus || !emailPlus.trim()}
-      className="h-11 w-full"
-    >
-      {verificandoPlus ? "VERIFICANDO..." : "VERIFICAR MEU ACESSO"}
-    </Button>
-  </div>
-
-  {mensagemPlus && (
-    <p
-      className={`mt-3 text-sm font-medium ${
-        plusAtivo ? "text-success" : "text-destructive"
-      }`}
-    >
-      {mensagemPlus}
-    </p>
-  )}
-</div>
-                A ferramenta básica continua gratuita para todo mundo.
-              </p>
             </div>
           </div>
         </div>
