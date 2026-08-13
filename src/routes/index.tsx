@@ -440,6 +440,13 @@ function Index() {
           </div>
         </div>
       </section>
+            {plusAtivo && (
+        <PlusTools
+          saldo={saldo}
+          entradas={entradas}
+          saidas={saidas}
+        />
+      )}
 
       {/* 5. E-book */}
       <section id="ebook" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-14">
