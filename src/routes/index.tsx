@@ -10,6 +10,7 @@ import { SpendingBreakdown } from "@/components/finance/SpendingBreakdown";
 import { Goals } from "@/components/finance/Goals";
 import { FinanceQuiz } from "@/components/quiz/FinanceQuiz";
 import { PLUS_TOOLS, PRODUCTS } from "@/lib/products";
+import { PlusTools } from "@/components/plus/PlusTools";
 
 export const Route = createFileRoute("/")({
   head: () => ({
