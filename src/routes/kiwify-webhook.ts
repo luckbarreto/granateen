@@ -37,7 +37,7 @@ export const Route = createFileRoute("/kiwify-webhook")({
 
         const supabase = createClient(
           process.env.SUPABASE_URL!,
-          process.env.SUPABASE_SERVICE_ROLE_KEY!,
+          process.env.SUPABASE_SERVICE_SECRET_KEY!,
         );
 
         const { error } = await supabase.from("plus_acess").upsert(
